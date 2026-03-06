@@ -7,7 +7,7 @@ const STORAGE_KEY       = 'rayton_managers';
 const SETTINGS_STORAGE  = 'rayton_settings';
 
 const MANAGERS_URL = 'https://n8n.rayton.net/webhook/managers';
-const SETTINGS_URL = 'https://n8n.rayton.net/webhook/settings';
+const SETTINGS_URL = 'https://n8n.rayton.net/webhook/ses-settings';
 
 let managers = [];
 
