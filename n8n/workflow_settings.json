@@ -113,16 +113,8 @@
         "url": "={{ $json.clearUrl }}",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleSheetsOAuth2Api",
-        "sendBody": true,
-        "specifyBody": "string",
-        "body": "{}",
-        "options": {
-          "headers": {
-            "entries": [
-              { "name": "Content-Type", "value": "application/json" }
-            ]
-          }
-        }
+        "sendBody": false,
+        "options": {}
       },
       "credentials": {
         "googleSheetsOAuth2Api": {
