@@ -232,17 +232,9 @@ function updateMountSummary() {
 function getTotalPanels() {
   const watt = getPanelWatt();
   if (!watt) return 0;
-  // Якщо вже є підібрані інвертори — беремо точну DC від них
-  const inv = getSelectedInverters();
-  const ac  = inv.reduce((s, i) => s + i.power * i.qty, 0);
-  if (ac > 0) {
-    return Math.ceil((ac * CONFIG.dcAcRatio) / (watt / 1000));
-  }
-  // Інакше — орієнтовно від вхідних даних
   const dc = getTargetDC();
   if (!dc) return 0;
-  const realDC = Math.max(dc / CONFIG.dcAcRatio, CONFIG.minAC) * CONFIG.dcAcRatio;
-  return Math.ceil(realDC / (watt / 1000));
+  return Math.ceil(dc / (watt / 1000));
 }
 
 function fillInverterSelects() {
