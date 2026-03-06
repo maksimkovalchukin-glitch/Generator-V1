@@ -136,15 +136,9 @@
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleSheetsOAuth2Api",
         "sendBody": true,
-        "specifyBody": "string",
-        "body": "={{ $('Code: Prepare Settings Rows').first().json.writeBody }}",
-        "options": {
-          "headers": {
-            "entries": [
-              { "name": "Content-Type", "value": "application/json" }
-            ]
-          }
-        }
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Code: Prepare Settings Rows').first().json.writeBody }}",
+        "options": {}
       },
       "credentials": {
         "googleSheetsOAuth2Api": {
