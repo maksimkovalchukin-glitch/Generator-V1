@@ -277,12 +277,13 @@ async function saveTemplates() {
   const settings = readTemplateFields();
   localStorage.setItem(SETTINGS_STORAGE, JSON.stringify(settings));
   try {
-    await fetch(SETTINGS_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ settings }) });
-    status.textContent = '✅ Збережено';
+    const res = await fetch(SETTINGS_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ settings }) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    status.textContent = '✅ Збережено на сервері';
     status.style.color = 'green';
   } catch {
-    status.textContent = '✅ Збережено локально';
-    status.style.color = '#888';
+    status.textContent = '⚠️ Збережено локально (сервер недоступний)';
+    status.style.color = '#e65100';
   }
   btn.disabled = false;
 }
