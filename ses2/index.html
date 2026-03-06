@@ -35,6 +35,21 @@
       </div>
 
       <div class="field">
+        <label>Емблема клієнта (необов'язково)</label>
+        <div class="img-upload-wrap" id="logoUploadWrap">
+          <input type="file" id="client_logo" accept="image/*" class="img-file-input" />
+          <label for="client_logo" class="img-upload-btn" id="logoUploadBtn">
+            <span class="img-upload-icon">🏢</span>
+            <span id="logoUploadLabel">Додати логотип клієнта</span>
+          </label>
+          <div class="img-preview-wrap" id="logoPreviewWrap" style="display:none">
+            <img id="logoPreview" class="img-preview" alt="Емблема" />
+            <button type="button" class="img-remove-btn" id="logoRemoveBtn">✕ Видалити</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
         <label>Менеджер</label>
         <select id="manager">
           <option value="">Оберіть менеджера</option>
@@ -45,6 +60,19 @@
           <option>Стоцький Віталій</option>
           <option>Павлов Дмитро</option>
           <option>Лисенко Юрій</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Сфера діяльності</label>
+        <select id="client_sector">
+          <option value="">Оберіть сферу</option>
+          <option value="1">Виробничі підприємства</option>
+          <option value="2">Агропромисловий сектор</option>
+          <option value="3">Будівельна та індустріальна група</option>
+          <option value="4">Метал / машинобудування / обладнання</option>
+          <option value="5">Логістика / склади / торгові центри</option>
+          <option value="6">Великі промислові об'єкти 1+ МВт</option>
         </select>
       </div>
 
