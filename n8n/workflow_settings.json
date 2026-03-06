@@ -98,23 +98,28 @@
       "typeVersion": 2,
       "position": [460, 600],
       "parameters": {
-        "jsCode": "const input = $input.first().json;\nconst settings = input.body?.settings || input.settings || {};\n\nconst values = Object.entries(settings).map(([k, v]) => [k, String(v)]);\n\nconst SHEET_ID = '1IgaI0_eE0xY7ljfNh138CA-aYIiFzGJpmu9s2hLV04g';\nconst SHEET_ENC = encodeURIComponent('Налаштування');\n\nconst clearUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_ENC}!A2:B200:clear`;\nconst writeUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_ENC}!A2:B?valueInputOption=RAW`;\nconst writeBody = JSON.stringify({\n  range: 'Налаштування!A2:B',\n  majorDimension: 'ROWS',\n  values: values.length ? values : [['', '']]\n});\n\nreturn [{ json: { settings, clearUrl, writeUrl, writeBody } }];"
+        "jsCode": "const input = $input.first().json;\nconst settings = input.body?.settings || input.settings || {};\nconst values = Object.entries(settings).map(([k, v]) => [k, String(v)]);\nreturn [{ json: { settings, values: values.length ? values : [['','']] } }];"
       }
     },
 
     {
       "id": "s07",
-      "name": "HTTP: Clear Settings Range",
-      "type": "n8n-nodes-base.httpRequest",
+      "name": "GSheets: Clear Settings Range",
+      "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [680, 600],
       "parameters": {
-        "method": "POST",
-        "url": "={{ $json.clearUrl }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googleSheetsOAuth2Api",
-        "sendBody": false,
-        "options": {}
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "1IgaI0_eE0xY7ljfNh138CA-aYIiFzGJpmu9s2hLV04g",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Налаштування",
+          "mode": "name"
+        }
       },
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -128,16 +133,16 @@
       "id": "s08",
       "name": "HTTP: Write Settings Rows",
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
+      "typeVersion": 4.2,
       "position": [900, 600],
       "parameters": {
         "method": "PUT",
-        "url": "={{ $('Code: Prepare Settings Rows').first().json.writeUrl }}",
+        "url": "=https://sheets.googleapis.com/v4/spreadsheets/1IgaI0_eE0xY7ljfNh138CA-aYIiFzGJpmu9s2hLV04g/values/{{ encodeURIComponent('Налаштування') }}!A2:B?valueInputOption=RAW",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleSheetsOAuth2Api",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ $('Code: Prepare Settings Rows').first().json.writeBody }}",
+        "jsonBody": "={{ { range: 'Налаштування!A2:B', majorDimension: 'ROWS', values: $('Code: Prepare Settings Rows').first().json.values } }}",
         "options": {}
       },
       "credentials": {
@@ -183,9 +188,9 @@
       "main": [[{ "node": "Code: Prepare Settings Rows", "type": "main", "index": 0 }]]
     },
     "Code: Prepare Settings Rows": {
-      "main": [[{ "node": "HTTP: Clear Settings Range", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "GSheets: Clear Settings Range", "type": "main", "index": 0 }]]
     },
-    "HTTP: Clear Settings Range": {
+    "GSheets: Clear Settings Range": {
       "main": [[{ "node": "HTTP: Write Settings Rows", "type": "main", "index": 0 }]]
     },
     "HTTP: Write Settings Rows": {
