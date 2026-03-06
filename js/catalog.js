@@ -25,7 +25,12 @@
 
     const stored = localStorage.getItem(CATALOG_STORAGE);
     if (stored) {
-      try { window.CATALOG = JSON.parse(stored); } catch { }
+      try { window.CATALOG = JSON.parse(stored); return; } catch { }
+    }
+
+    // Fallback до статичних дефолтних даних
+    if (window.SES_CATALOG_DATA) {
+      window.CATALOG = window.SES_CATALOG_DATA;
     }
   }
 
